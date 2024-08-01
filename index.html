@@ -9,16 +9,16 @@
     </head>
     <body>
         <div class="chart-container" id="chart-container"></div>
-        <p id="iteration-count-text" style="display: none;">Number of iterations: <span id="iteration-count">0</span></p>
+        <p id="iteration-count-text" style="display: none; font-size: large;">Number of iterations: <b id="iteration-count">0</b></p>
         <div id="bar-range-controls" class="PB-range-slider-div">
             <label for="bar-range">Number of bars: </label>
             <input type="range" min="8" max="30" value="16" class="PB-range-slider" id="bar-range">
-            <p id="bar-range-value" class="PB-range-slidervalue">16</p>
+            <b id="bar-range-value" class="PB-range-slidervalue">16</b>
         </div>
         <div id="speed-range-controls" class="PB-range-slider-div">
             <label for="speed-range">Interval per iteration: </label>
             <input type="range" min="25" max="300" value="150" step="25" class="PB-range-slider" id="speed-range">
-            <p><span id="speed-range-value" class="PB-range-slidervalue">150</span>ms</p>
+            <p><b id="speed-range-value" class="PB-range-slidervalue">150</b>ms</p>
         </div>
         <div id="radio-input" class="radio-input">
             <label class="label">
