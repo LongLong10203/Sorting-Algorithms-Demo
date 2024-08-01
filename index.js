@@ -165,7 +165,7 @@ async function bogoSort() {
     }
 }
 
-let timer1, timer2
+let timer1, timer2, timer3, timer4
 
 startButton.addEventListener("click", function() {
     const buttonText = document.getElementById("start-button-text")
@@ -192,7 +192,13 @@ startButton.addEventListener("click", function() {
             }, 5000)
             timer2 = setTimeout(() => {
                 miracleSortText.innerHTML = "Pray for it to work..."
-            }, 10000)
+            }, 15000)
+            timer3 = setTimeout(() => {
+                miracleSortText.innerHTML = "It's almost sorted..."
+            }, 30000)
+            timer4 = setTimeout(() => {
+                miracleSortText.innerHTML = "Still waiting?"
+            }, 60000);
         }
     } else if (buttonText.innerHTML == "Restart") {
         miracleSortText.style.display = "none"
