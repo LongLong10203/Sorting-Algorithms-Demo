@@ -22,6 +22,7 @@ const iterate = async () => {
     ++iterationcount.innerHTML
     await delay(speedRange.value)
 }
+const miracleSortText = document.getElementById("miracle-sort-text")
 
 function isSorted(bars) {
     for (let i = 0; i < bars.length-1; ++i)
@@ -62,9 +63,8 @@ async function bubbleSort() {
 
     for (let i = 0; i < arr.length; ++i) {
         for (let j = 0; j < (arr.length - i - 1); ++j) {
-            if (!isSorting) {
+            if (!isSorting)
                 return
-            }
 
             let height1 = parseFloat(arr[j].style.height)
             let height2 = parseFloat(arr[j+1].style.height)
@@ -90,9 +90,8 @@ async function insertionSort() {
     const arr = Array.from(chartContainer.childNodes);
 
     for (let i = 1; i < arr.length; ++i) {
-        if (!isSorting) {
+        if (!isSorting)
             return
-        }
 
         let currentHeight = parseFloat(arr[i].style.height)
         let j = i - 1
@@ -111,7 +110,7 @@ async function insertionSort() {
 }
 
 async function selectionSort() {
-    const arr = Array.from(chartContainer.childNodes);
+    const arr = Array.from(chartContainer.childNodes)
 
     for (let i = 0; i < arr.length - 1; ++i) {
         if (!isSorting) {
@@ -124,9 +123,8 @@ async function selectionSort() {
             arr[minIndex-1].style.backgroundColor = ""
 
         for (let j = i + 1; j < arr.length; ++j) {
-            if (!isSorting) {
+            if (!isSorting)
                 return;
-            }
 
             arr[j].style.backgroundColor = "green"
 
@@ -155,6 +153,20 @@ async function selectionSort() {
         bar.style.backgroundColor = ""
 }
 
+async function bogoSort() {
+    let arr = Array.from(chartContainer.childNodes)
+    while (!isSorted(arr)) {
+        if (!isSorting)
+            return;
+        shuffle(arr)
+        chartContainer.innerHTML = "";
+        arr.forEach(bar => chartContainer.appendChild(bar));
+        await iterate()
+    }
+}
+
+let timer1, timer2
+
 startButton.addEventListener("click", function() {
     const buttonText = document.getElementById("start-button-text")
     if (buttonText.innerHTML == "Start") {
@@ -164,13 +176,28 @@ startButton.addEventListener("click", function() {
         radioInputDiv.style.display = "none"
         buttonText.innerHTML = "Restart"
         isSorting = true
-        if (document.getElementById("value-1").checked)
+        if (document.getElementById("value-1").checked) {
             bubbleSort()
-        else if (document.getElementById("value-2").checked)
+        } else if (document.getElementById("value-2").checked) {
             insertionSort()
-        else if (document.getElementById("value-3").checked)
+        } else if (document.getElementById("value-3").checked) {
             selectionSort()
+        } else if (document.getElementById("value-4").checked) {
+            bogoSort()
+        } else if (document.getElementById("value-5").checked) {
+            miracleSortText.style.display = "block"
+            miracleSortText.innerHTML = "Wait for a while..."
+            timer1 = setTimeout(() => {
+                miracleSortText.innerHTML = "Wait for a little bit more..."
+            }, 5000)
+            timer2 = setTimeout(() => {
+                miracleSortText.innerHTML = "Pray for it to work..."
+            }, 10000)
+        }
     } else if (buttonText.innerHTML == "Restart") {
+        miracleSortText.style.display = "none"
+        clearTimeout(timer1)
+        clearTimeout(timer2)
         iterationCounteText.style.display = "none"
         barRange.disabled = false
         radioInputDiv.style.display = "flex"

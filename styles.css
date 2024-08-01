@@ -200,3 +200,10 @@ body {
 .PB-range-slidervalue {
     font-weight: 600;
 }
+
+/* provided by Jay */
+#controls {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
