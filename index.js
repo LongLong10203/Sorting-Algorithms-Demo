@@ -5,7 +5,7 @@ function shuffle(array) {
     while (currentIndex != 0) {
         let randomIndex = Math.floor(Math.random() * currentIndex)
         currentIndex--
-        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
     }
 }
 
@@ -56,7 +56,7 @@ speedRange.addEventListener("input", function() {
     document.getElementById("speed-range-value").innerHTML = speedRange.value
 })
 
-let isSorting = false;
+let isSorting = false
 
 async function bubbleSort() {
     const arr = Array.from(chartContainer.childNodes)
@@ -87,7 +87,7 @@ async function bubbleSort() {
 }
 
 async function insertionSort() {
-    const arr = Array.from(chartContainer.childNodes);
+    const arr = Array.from(chartContainer.childNodes)
 
     for (let i = 1; i < arr.length; ++i) {
         if (!isSorting)
@@ -124,7 +124,7 @@ async function selectionSort() {
 
         for (let j = i + 1; j < arr.length; ++j) {
             if (!isSorting)
-                return;
+                return
 
             arr[j].style.backgroundColor = "green"
 
@@ -134,7 +134,7 @@ async function selectionSort() {
             let heightCurrent = parseFloat(arr[j].style.height)
 
             if (heightCurrent < heightMin) {
-                minIndex = j;
+                minIndex = j
             }
 
             arr[j].style.backgroundColor = ""
@@ -157,10 +157,10 @@ async function bogoSort() {
     let arr = Array.from(chartContainer.childNodes)
     while (!isSorted(arr)) {
         if (!isSorting)
-            return;
+            return
         shuffle(arr)
-        chartContainer.innerHTML = "";
-        arr.forEach(bar => chartContainer.appendChild(bar));
+        chartContainer.innerHTML = ""
+        arr.forEach(bar => chartContainer.appendChild(bar))
         await iterate()
     }
 }
@@ -198,7 +198,7 @@ startButton.addEventListener("click", function() {
             }, 30000)
             timer4 = setTimeout(() => {
                 miracleSortText.innerHTML = "Still waiting?"
-            }, 60000);
+            }, 60000)
         }
     } else if (buttonText.innerHTML == "Restart") {
         miracleSortText.style.display = "none"
@@ -211,4 +211,4 @@ startButton.addEventListener("click", function() {
         isSorting = false
         createBars(barRange.value)
     }
-});
+})
