@@ -1,2 +1,2 @@
-# Demonstration of sorting algorithms learnt in F4
+# Sorting-Algorithms-Demo
 Site: https://sorting-algorithms-by-long.netlify.app/
