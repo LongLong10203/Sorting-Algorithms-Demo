@@ -41,7 +41,7 @@ function createBars(numBars) {
 
 createBars(barRange.value)
 
-let isSorting = false, isShuffling = false;
+let isSorting = false, isShuffling = false
 
 async function shuffleBars() {
     isShuffling = true;
@@ -173,6 +173,70 @@ async function selectionSort() {
         bar.style.backgroundColor = ""
 }
 
+async function cocktailSort() {
+    const arr = Array.from(chartContainer.childNodes)
+    let sorted = false
+    
+    while (!sorted) {
+        if (!isSorting)
+            return
+
+        sorted = true
+        
+        // Forward pass
+        for (let i = 0; i < arr.length - 1; ++i) {
+            if (!isSorting) return
+            
+            let height1 = parseFloat(arr[i].style.height)
+            let height2 = parseFloat(arr[i + 1].style.height)
+            
+            if (height1 > height2) {
+                arr[i].style.backgroundColor = "green"
+                arr[i + 1].style.backgroundColor = "green"
+                
+                await iterate()
+                
+                let temp = arr[i].style.height
+                arr[i].style.height = arr[i + 1].style.height
+                arr[i + 1].style.height = temp
+                
+                arr[i].style.backgroundColor = ""
+                arr[i + 1].style.backgroundColor = ""
+                
+                sorted = false
+            }
+        }
+        
+        if (sorted) break
+        
+        sorted = true
+        
+        // Backward pass
+        for (let i = arr.length - 1; i > 0; --i) {
+            if (!isSorting) return
+            
+            let height1 = parseFloat(arr[i].style.height)
+            let height2 = parseFloat(arr[i - 1].style.height)
+            
+            if (height1 < height2) {
+                arr[i].style.backgroundColor = "green"
+                arr[i - 1].style.backgroundColor = "green"
+                
+                await iterate()
+                
+                let temp = arr[i].style.height
+                arr[i].style.height = arr[i - 1].style.height
+                arr[i - 1].style.height = temp
+                
+                arr[i].style.backgroundColor = ""
+                arr[i - 1].style.backgroundColor = ""
+
+                sorted = false
+            }
+        }
+    }
+}
+
 async function bogoSort() {
     let arr = Array.from(chartContainer.childNodes)
     while (!isSorted(arr)) {
@@ -192,15 +256,17 @@ startButton.addEventListener("click", async function() {
         radioInputDiv.style.display = "none"
         startButton.style.display = "none"
         isSorting = true
-        if (document.getElementById("value-1").checked) {
+        if (document.getElementById("bubble").checked) {
             bubbleSort()
-        } else if (document.getElementById("value-2").checked) {
+        } else if (document.getElementById("insertion").checked) {
             insertionSort()
-        } else if (document.getElementById("value-3").checked) {
+        } else if (document.getElementById("selection").checked) {
             selectionSort()
-        } else if (document.getElementById("value-4").checked) {
+        } else if (document.getElementById("cocktail").checked) {
+            cocktailSort()
+        } else if (document.getElementById("bogo").checked) {
             bogoSort()
-        } else if (document.getElementById("value-5").checked) {
+        } else if (document.getElementById("miracle").checked) {
             miracleSortText.style.display = "block"
             miracleSortText.innerHTML = "Wait for a while..."
             timer1 = setTimeout(() => {
