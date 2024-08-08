@@ -124,7 +124,7 @@ async function insertionSort() {
         let j = i - 1
 
         while (j >= 0 && parseFloat(arr[j].style.height) > currentHeight) {
-            arr[j].style.backgroundColor = "green"
+            arr[j].style.backgroundColor = "orange"
             arr[j + 1].style.height = arr[j].style.height
             arr[j + 1].style.backgroundColor = ""
             await iterate()
@@ -144,7 +144,7 @@ async function selectionSort() {
             return
 
         let minIndex = i
-        arr[minIndex].style.backgroundColor = "orange"
+        arr[minIndex].style.backgroundColor = "green"
         if (minIndex > 0)
             arr[minIndex-1].style.backgroundColor = ""
 
@@ -152,7 +152,7 @@ async function selectionSort() {
             if (!isSorting)
                 return
 
-            arr[j].style.backgroundColor = "green"
+            arr[j].style.backgroundColor = "orange"
 
             await iterate()
 
