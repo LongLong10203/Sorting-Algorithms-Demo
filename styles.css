@@ -1,6 +1,7 @@
 body {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     /* height: 100vh; */
     margin: 0;
@@ -26,7 +27,7 @@ body {
     border: 1px solid black;
 }
 
-#start-button {
+.button {
     --button_radius: 0.75em;
     --button_color: #e8e8e8;
     --button_outline_color: #000000;
@@ -49,11 +50,11 @@ body {
     transition: transform 0.1s ease;
 }
   
-#start-button:hover .button_top {
+.button:hover .button_top {
     transform: translateY(-0.33em);
 }
   
-#start-button:active .button_top {
+.button:active .button_top {
     transform: translateY(0);
 }
 
@@ -202,7 +203,7 @@ body {
 }
 
 /* provided by Jay */
-#controls {
+#controls, #bottom-buttons {
     display: flex;
     flex-direction: row;
     gap: 1rem;

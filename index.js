@@ -6,6 +6,8 @@ const barRange = document.getElementById("bar-range")
 const speedRange = document.getElementById("speed-range")
 const chartContainer = document.getElementById("chart-container")
 const startButton = document.getElementById("start-button")
+const buttonText = document.getElementById("start-button-text")
+const restartButton = document.getElementById("restart-button")
 const radioInputDiv = document.getElementById("radio-input")
 const iterationCounteText = document.getElementById("iteration-count-text")
 const iterationcount = document.getElementById("iteration-count")
@@ -39,11 +41,18 @@ function createBars(numBars) {
 
 createBars(barRange.value)
 
+let isSorting = false, isShuffling = false;
+
 async function shuffleBars() {
+    isShuffling = true;
+
     const arr = Array.from(chartContainer.childNodes)
     let currentIndex = arr.length
 
     while (currentIndex != 0) {
+        if (!isShuffling)
+            return
+
         let randomIndex = Math.floor(Math.random() * currentIndex)
         currentIndex--
 
@@ -69,8 +78,6 @@ barRange.addEventListener("input", function() {
 speedRange.addEventListener("input", function() {
     document.getElementById("speed-range-value").innerHTML = speedRange.value
 })
-
-let isSorting = false
 
 async function bubbleSort() {
     const arr = Array.from(chartContainer.childNodes)
@@ -127,9 +134,8 @@ async function selectionSort() {
     const arr = Array.from(chartContainer.childNodes)
 
     for (let i = 0; i < arr.length - 1; ++i) {
-        if (!isSorting) {
+        if (!isSorting)
             return
-        }
 
         let minIndex = i
         arr[minIndex].style.backgroundColor = "orange"
@@ -180,12 +186,11 @@ async function bogoSort() {
 let timer1, timer2, timer3, timer4
 
 startButton.addEventListener("click", async function() {
-    const buttonText = document.getElementById("start-button-text")
     if (buttonText.innerHTML == "Start") {
         iterationcount.innerHTML = "0"
         iterationCounteText.style.display = "block"
         radioInputDiv.style.display = "none"
-        buttonText.innerHTML = "Restart"
+        startButton.style.display = "none"
         isSorting = true
         if (document.getElementById("value-1").checked) {
             bubbleSort()
@@ -211,23 +216,35 @@ startButton.addEventListener("click", async function() {
                 miracleSortText.innerHTML = "Still waiting?"
             }, 60000)
         }
-    } else if (buttonText.innerHTML == "Restart") {
-        miracleSortText.style.display = "none"
-        for (const timer of [timer1, timer2, timer3, timer4])
-            clearTimeout(timer)
-        iterationCounteText.style.display = "none"
-        buttonText.innerHTML = "Shuffle"
-        isSorting = false
-        createBars(barRange.value)
-        barRangeControls.style.display = "flex"
     } else if (buttonText.innerHTML == "Shuffle") {
         barRangeControls.style.display = "none"
         startButton.style.display = "none"
         shufflingText.style.display = "block"
+        restartButton.style.display = "block"
         await shuffleBars()
-        radioInputDiv.style.display = "flex"
-        buttonText.innerHTML = "Start"
-        startButton.style.display = ""
-        shufflingText.style.display = "none"
+        if (isShuffling) {
+            radioInputDiv.style.display = "flex"
+            buttonText.innerHTML = "Start"
+            startButton.style.display = ""
+            shufflingText.style.display = "none"
+            isShuffling = false
+        }
     }
+})
+
+restartButton.addEventListener("click", function() {
+    isSorting = false
+    isShuffling = false
+    createBars(barRange.value)
+    iterationCounteText.style.display = "none"
+    barRangeControls.style.display = "flex"
+    radioInputDiv.style.display = "none"
+    buttonText.innerHTML = "Shuffle"
+    shufflingText.style.display = "none"
+    startButton.style.display = ""
+    restartButton.style.display = "none"
+
+    for (const timer of [timer1, timer2, timer3, timer4])
+        clearTimeout(timer)
+    miracleSortText.style.display = "none"
 })
