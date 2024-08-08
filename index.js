@@ -79,11 +79,6 @@ speedRange.addEventListener("input", function() {
     document.getElementById("speed-range-value").innerHTML = speedRange.value
 })
 
-function clearBars() {
-    for (const bar of chartContainer.childNodes)
-        bar.style.backgroundColor = ""
-}
-
 async function bubbleSort() {
     const arr = Array.from(chartContainer.childNodes)
 
@@ -179,21 +174,20 @@ async function selectionSort() {
 
 async function cocktailSort() {
     const arr = Array.from(chartContainer.childNodes)
+    let start = 0
+    let end = arr.length - 1
     let sorted = false
-    
-    while (!sorted) {
-        if (!isSorting)
-            return
 
+    while (!sorted) {
         sorted = true
-        
+
         // Forward pass
-        for (let i = 0; i < arr.length - 1; ++i) {
+        for (let i = start; i < end; ++i) {
             if (!isSorting) return
-            
+
             let height1 = parseFloat(arr[i].style.height)
             let height2 = parseFloat(arr[i + 1].style.height)
-            
+
             arr[i].style.backgroundColor = "orange"
 
             await iterate()
@@ -202,24 +196,25 @@ async function cocktailSort() {
                 let temp = arr[i].style.height
                 arr[i].style.height = arr[i + 1].style.height
                 arr[i + 1].style.height = temp
-                
+
                 sorted = false
             }
 
             arr[i].style.backgroundColor = ""
         }
-        
+
         if (sorted) break
-        
+
         sorted = true
-        
+        end--
+
         // Backward pass
-        for (let i = arr.length - 1; i > 0; --i) {
+        for (let i = end; i > start; --i) {
             if (!isSorting) return
-            
+
             let height1 = parseFloat(arr[i].style.height)
             let height2 = parseFloat(arr[i - 1].style.height)
-            
+
             arr[i].style.backgroundColor = "orange"
 
             await iterate()
@@ -228,12 +223,14 @@ async function cocktailSort() {
                 let temp = arr[i].style.height
                 arr[i].style.height = arr[i - 1].style.height
                 arr[i - 1].style.height = temp
-                
+
                 sorted = false
             }
 
             arr[i].style.backgroundColor = ""
         }
+
+        start++
     }
 }
 
