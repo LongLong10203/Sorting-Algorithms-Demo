@@ -79,30 +79,36 @@ speedRange.addEventListener("input", function() {
     document.getElementById("speed-range-value").innerHTML = speedRange.value
 })
 
+function clearBars() {
+    for (const bar of chartContainer.childNodes)
+        bar.style.backgroundColor = ""
+}
+
 async function bubbleSort() {
     const arr = Array.from(chartContainer.childNodes)
 
     for (let i = 0; i < arr.length; ++i) {
-        for (let j = 0; j < (arr.length - i - 1); ++j) {
+        for (let j = 0; j < arr.length - i - 1; ++j) {
             if (!isSorting)
                 return
 
             let height1 = parseFloat(arr[j].style.height)
             let height2 = parseFloat(arr[j+1].style.height)
 
+            arr[j].style.backgroundColor = "orange"
+            // arr[j+1].style.backgroundColor = "green"
+            
+            await iterate()
+
             if (height1 > height2) {
-                arr[j].style.backgroundColor = "green"
-                arr[j+1].style.backgroundColor = "green"
-
-                await iterate()
-
                 let temp = arr[j].style.height
                 arr[j].style.height = arr[j+1].style.height
                 arr[j+1].style.height = temp
 
-                arr[j].style.backgroundColor = ""
-                arr[j+1].style.backgroundColor = ""
             }
+
+            arr[j].style.backgroundColor = ""
+            // arr[j+1].style.backgroundColor = ""
         }
     }
 }
@@ -191,8 +197,8 @@ async function cocktailSort() {
             let height2 = parseFloat(arr[i + 1].style.height)
             
             if (height1 > height2) {
-                arr[i].style.backgroundColor = "green"
-                arr[i + 1].style.backgroundColor = "green"
+                arr[i].style.backgroundColor = "orange"
+                // arr[i + 1].style.backgroundColor = "green"
                 
                 await iterate()
                 
@@ -201,7 +207,7 @@ async function cocktailSort() {
                 arr[i + 1].style.height = temp
                 
                 arr[i].style.backgroundColor = ""
-                arr[i + 1].style.backgroundColor = ""
+                // arr[i + 1].style.backgroundColor = ""
                 
                 sorted = false
             }
@@ -219,8 +225,8 @@ async function cocktailSort() {
             let height2 = parseFloat(arr[i - 1].style.height)
             
             if (height1 < height2) {
-                arr[i].style.backgroundColor = "green"
-                arr[i - 1].style.backgroundColor = "green"
+                arr[i].style.backgroundColor = "orange"
+                // arr[i - 1].style.backgroundColor = "green"
                 
                 await iterate()
                 
@@ -229,7 +235,7 @@ async function cocktailSort() {
                 arr[i - 1].style.height = temp
                 
                 arr[i].style.backgroundColor = ""
-                arr[i - 1].style.backgroundColor = ""
+                // arr[i - 1].style.backgroundColor = ""
 
                 sorted = false
             }
