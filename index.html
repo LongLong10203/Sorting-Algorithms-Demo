@@ -10,6 +10,7 @@
     <body>
         <div class="chart-container" id="chart-container"></div>
         <p id="iteration-count-text" style="display: none; font-size: large;">Number of iterations: <b id="iteration-count">0</b></p>
+        <p id="shuffling-text" style="display: none; font-size: large;">Shuffling...</p>
         <p id="miracle-sort-text" style="display: none; font-size: large;"></p>
         <div id="controls">
             <div id="bar-range-controls" class="PB-range-slider-div">
@@ -18,8 +19,8 @@
                 <b id="bar-range-value" class="PB-range-slidervalue">16</b>
             </div>
             <div id="speed-range-controls" class="PB-range-slider-div">
-                <label for="speed-range">Interval per iteration: </label>
-                <input type="range" min="25" max="300" value="150" step="25" class="PB-range-slider" id="speed-range">
+                <label for="speed-range">Interval: </label>
+                <input type="range" min="0" max="300" value="150" step="25" class="PB-range-slider" id="speed-range">
                 <p><b id="speed-range-value" class="PB-range-slidervalue">150</b>ms</p>
             </div>
         </div>
@@ -53,7 +54,7 @@
         </div>
         <br>
         <button id="start-button">
-            <span id="start-button-text" class="button_top">Start</span>
+            <span id="start-button-text" class="button_top">Shuffle</span>
         </button>
     </body>
 </html>

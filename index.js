@@ -1,14 +1,5 @@
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
-function shuffle(array) {
-    let currentIndex = array.length
-    while (currentIndex != 0) {
-        let randomIndex = Math.floor(Math.random() * currentIndex)
-        currentIndex--
-        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
-    }
-}
-
 const barRangeControls = document.getElementById("bar-range-controls")
 const speedRangeControls = document.getElementById("speed-range-controls")
 const barRange = document.getElementById("bar-range")
@@ -23,6 +14,7 @@ const iterate = async () => {
     await delay(speedRange.value)
 }
 const miracleSortText = document.getElementById("miracle-sort-text")
+const shufflingText = document.getElementById("shuffling-text")
 
 function isSorted(bars) {
     for (let i = 0; i < bars.length-1; ++i)
@@ -32,10 +24,10 @@ function isSorted(bars) {
 }
 
 function createBars(numBars) {
-    arr = new Array()
+    let arr = new Array()
     for (let i = 1; i <= numBars; ++i)
         arr.push(100/numBars*i)
-    shuffle(arr)
+    // shuffle(arr)
     chartContainer.innerHTML = ""
     for (let i = 0; i < numBars; i++) {
         const bar = document.createElement("div")
@@ -46,6 +38,28 @@ function createBars(numBars) {
 }
 
 createBars(barRange.value)
+
+async function shuffleBars() {
+    const arr = Array.from(chartContainer.childNodes)
+    let currentIndex = arr.length
+
+    while (currentIndex != 0) {
+        let randomIndex = Math.floor(Math.random() * currentIndex)
+        currentIndex--
+
+        arr[currentIndex].style.backgroundColor = "green"
+        arr[randomIndex].style.backgroundColor = "green"
+
+        await delay(speedRange.value)
+
+        let temp = arr[currentIndex].style.height
+        arr[currentIndex].style.height = arr[randomIndex].style.height
+        arr[randomIndex].style.height = temp
+        
+        arr[currentIndex].style.backgroundColor = ""
+        arr[randomIndex].style.backgroundColor = ""
+    }
+}
 
 barRange.addEventListener("input", function() {
     document.getElementById("bar-range-value").innerHTML = barRange.value
@@ -158,21 +172,18 @@ async function bogoSort() {
     while (!isSorted(arr)) {
         if (!isSorting)
             return
-        shuffle(arr)
-        chartContainer.innerHTML = ""
-        arr.forEach(bar => chartContainer.appendChild(bar))
+        await shuffleBars()
         await iterate()
     }
 }
 
 let timer1, timer2, timer3, timer4
 
-startButton.addEventListener("click", function() {
+startButton.addEventListener("click", async function() {
     const buttonText = document.getElementById("start-button-text")
     if (buttonText.innerHTML == "Start") {
         iterationcount.innerHTML = "0"
         iterationCounteText.style.display = "block"
-        barRange.disabled = true
         radioInputDiv.style.display = "none"
         buttonText.innerHTML = "Restart"
         isSorting = true
@@ -202,13 +213,21 @@ startButton.addEventListener("click", function() {
         }
     } else if (buttonText.innerHTML == "Restart") {
         miracleSortText.style.display = "none"
-        clearTimeout(timer1)
-        clearTimeout(timer2)
+        for (const timer of [timer1, timer2, timer3, timer4])
+            clearTimeout(timer)
         iterationCounteText.style.display = "none"
-        barRange.disabled = false
-        radioInputDiv.style.display = "flex"
-        buttonText.innerHTML = "Start"
+        buttonText.innerHTML = "Shuffle"
         isSorting = false
         createBars(barRange.value)
+        barRangeControls.style.display = "flex"
+    } else if (buttonText.innerHTML == "Shuffle") {
+        barRangeControls.style.display = "none"
+        startButton.style.display = "none"
+        shufflingText.style.display = "block"
+        await shuffleBars()
+        radioInputDiv.style.display = "flex"
+        buttonText.innerHTML = "Start"
+        startButton.style.display = ""
+        shufflingText.style.display = "none"
     }
 })

@@ -58,7 +58,7 @@ body {
 }
 
 .radio-input {
-    display: flex;
+    display: none; /* flex */
     flex-direction: column;
     gap: 10px;
 }
