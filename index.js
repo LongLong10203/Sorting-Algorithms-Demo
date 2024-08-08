@@ -96,7 +96,6 @@ async function bubbleSort() {
             let height2 = parseFloat(arr[j+1].style.height)
 
             arr[j].style.backgroundColor = "orange"
-            // arr[j+1].style.backgroundColor = "green"
             
             await iterate()
 
@@ -108,7 +107,6 @@ async function bubbleSort() {
             }
 
             arr[j].style.backgroundColor = ""
-            // arr[j+1].style.backgroundColor = ""
         }
     }
 }
@@ -196,21 +194,19 @@ async function cocktailSort() {
             let height1 = parseFloat(arr[i].style.height)
             let height2 = parseFloat(arr[i + 1].style.height)
             
+            arr[i].style.backgroundColor = "orange"
+
+            await iterate()
+
             if (height1 > height2) {
-                arr[i].style.backgroundColor = "orange"
-                // arr[i + 1].style.backgroundColor = "green"
-                
-                await iterate()
-                
                 let temp = arr[i].style.height
                 arr[i].style.height = arr[i + 1].style.height
                 arr[i + 1].style.height = temp
                 
-                arr[i].style.backgroundColor = ""
-                // arr[i + 1].style.backgroundColor = ""
-                
                 sorted = false
             }
+
+            arr[i].style.backgroundColor = ""
         }
         
         if (sorted) break
@@ -224,21 +220,19 @@ async function cocktailSort() {
             let height1 = parseFloat(arr[i].style.height)
             let height2 = parseFloat(arr[i - 1].style.height)
             
+            arr[i].style.backgroundColor = "orange"
+
+            await iterate()
+
             if (height1 < height2) {
-                arr[i].style.backgroundColor = "orange"
-                // arr[i - 1].style.backgroundColor = "green"
-                
-                await iterate()
-                
                 let temp = arr[i].style.height
                 arr[i].style.height = arr[i - 1].style.height
                 arr[i - 1].style.height = temp
                 
-                arr[i].style.backgroundColor = ""
-                // arr[i - 1].style.backgroundColor = ""
-
                 sorted = false
             }
+
+            arr[i].style.backgroundColor = ""
         }
     }
 }
